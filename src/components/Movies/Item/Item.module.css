@@ -1,0 +1,10 @@
+.itemContainer {
+  min-height: 200px;
+}
+
+.movieTitle {
+  color: var(--primary-color);
+  text-transform: capitalize;
+  font-size: 18px;
+  line-height: 20px;
+}

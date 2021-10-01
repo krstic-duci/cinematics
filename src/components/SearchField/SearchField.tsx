@@ -1,24 +1,41 @@
-import React, { useState } from "react";
+import React from "react";
 
 import FormControl from "react-bootstrap/FormControl";
 import InputGroup from "react-bootstrap/InputGroup";
+import { Button } from "react-bootstrap";
 
-const SearchField = () => {
-  const [query, setQuery] = useState("");
+import styles from "./SearchField.module.css";
 
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+// TODO: Check if we are gonna need lodash-es
+// https://www.npmjs.com/package/react-debounce-input
+
+interface SearchFieldProps {
+  query: string;
+  setQuery: (value: string) => void;
+}
+
+const SearchField: React.VFC<SearchFieldProps> = ({ query, setQuery }) => {
+  const handleMovieSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
 
+  const handleClearMovieSearch = () => {
+    setQuery("");
+  };
+
   return (
-    <form>
+    <form onSubmit={(event) => event.preventDefault()}>
       <InputGroup>
         <FormControl
-          placeholder="Search you movie here"
-          onChange={onInputChange}
+          placeholder="Start typing..."
+          aria-placeholder="Start typing..."
+          onChange={handleMovieSearch}
+          value={query}
         />
+        <Button onClick={handleClearMovieSearch} className={styles.clear}>
+          Clear
+        </Button>
       </InputGroup>
-      {query ? query : "empty"}
     </form>
   );
 };
