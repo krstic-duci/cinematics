@@ -1,11 +1,21 @@
+import Navigation from "components/Navigation";
+
 import tmdb from "assets/images/tmdb.svg";
+
+import styles from "./Header.module.css";
 
 const Header = () => {
   return (
-    <header className="d-flex align-items-center justify-content-between mb-4">
-      <h1 className="mb-0">Cinematics</h1>
-      <img src={tmdb} alt="tmdb" width="100px" height="100px" />
-    </header>
+    <>
+      <header className="mb-4">
+        <Navigation />
+
+        <div className="d-flex align-items-center justify-content-between">
+          <h1 className={`${styles.h1} mb-0`}>Cinematics</h1>
+          <img src={tmdb} alt="tmdb" width="100px" height="100px" />
+        </div>
+      </header>
+    </>
   );
 };
 

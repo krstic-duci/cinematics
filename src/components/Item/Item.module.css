@@ -1,7 +1,3 @@
-.itemContainer {
-  min-height: 200px;
-}
-
 .movieTitle {
   color: var(--primary-color);
   text-transform: capitalize;

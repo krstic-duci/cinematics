@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 
 import Spinner from "react-bootstrap/Spinner";
-import Row from "react-bootstrap/Row";
-import { toast } from "react-toastify";
+import Alert from "react-bootstrap/Alert";
+import { useDebounce } from "use-debounce";
+import Slider, { Settings } from "react-slick";
 
-import Item from "components/Movies/Item";
+import Item from "components/Item";
 import SearchField from "components/SearchField";
 
 import { apiKey, apiMovieSearchUrl } from "utils/constants";
@@ -33,36 +34,51 @@ export interface MoviesItems {
   results: Movie[];
 }
 
-const preventToastDuplicateError = "prevent_toast_duplicate_error";
+const sliderSettings: Settings = {
+  className: "center",
+  centerMode: true,
+  infinite: true,
+  centerPadding: "60px",
+  slidesToShow: 3,
+  speed: 500,
+};
 
 const MoviesLists = () => {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [movies, setMovies] = useState<MoviesItems | null>(null);
 
+  const [debouncedQuery] = useDebounce(query, 300);
+
   useEffect(() => {
+    // Early exit when search query is falsy.
+    // This way we won't call API when query is empty string,
+    // and we will leave previously searched movies
+    // when "Clear" is clicked
+    if (!debouncedQuery) {
+      return;
+    }
     setLoading(true);
 
     const fetchData = async () => {
       try {
         const response = await (
-          await fetch(`${apiMovieSearchUrl}?api_key=${apiKey}&query=${query}`)
+          await fetch(
+            `${apiMovieSearchUrl}?api_key=${apiKey}&include_adult=false&query=${debouncedQuery}`
+          )
         ).json();
         setMovies(response);
         setLoading(false);
       } catch {
         setLoading(false);
-        if (query.length > 1) {
-          toast.error(cannotFetchMovies, {
-            position: toast.POSITION.BOTTOM_LEFT,
-            toastId: preventToastDuplicateError,
-          });
+        if (debouncedQuery.length > 1) {
+          <Alert>{cannotFetchMovies}</Alert>;
         }
       }
     };
 
     fetchData();
-  }, [query]);
+  }, [debouncedQuery]);
 
   return (
     <>
@@ -75,13 +91,13 @@ const MoviesLists = () => {
       )}
 
       <section className="my-4 position-relative">
-        <Row className="g-3">
+        <Slider {...sliderSettings}>
           {movies && movies?.results?.length > 0
             ? movies.results.map((movie) => (
                 <Item key={movie.id} movie={movie} />
               ))
             : null}
-        </Row>
+        </Slider>
 
         {movies?.results?.length === 0 && query.length > 1 && (
           <div className="w-100 text-center">{noMoviesItems}</div>

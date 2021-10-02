@@ -2,3 +2,7 @@
   --primary-color: #0d253f;
   --secondary-color: #01b4e4;
 }
+
+a.active {
+  color: var(--primary-color);
+}
