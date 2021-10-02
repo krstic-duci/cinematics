@@ -3,15 +3,13 @@ import { useEffect, useState } from "react";
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
 import { useDebounce } from "use-debounce";
-import Slider, { Settings } from "react-slick";
 
 import Item from "components/Item";
 import SearchField from "components/SearchField";
 
 import { apiKey, apiMovieSearchUrl } from "utils/constants";
-import { cannotFetchMovies } from "utils/toastMessages";
 
-import { noMoviesItems } from "./messages";
+import { noMoviesItems, cannotFetchMovies } from "./messages";
 
 export interface Movie {
   poster_path: string | null;
@@ -33,15 +31,6 @@ export interface Movie {
 export interface MoviesItems {
   results: Movie[];
 }
-
-const sliderSettings: Settings = {
-  className: "center",
-  centerMode: true,
-  infinite: true,
-  centerPadding: "60px",
-  slidesToShow: 3,
-  speed: 500,
-};
 
 const MoviesLists = () => {
   const [query, setQuery] = useState("");
@@ -90,14 +79,10 @@ const MoviesLists = () => {
         </div>
       )}
 
-      <section className="my-4 position-relative">
-        <Slider {...sliderSettings}>
-          {movies && movies?.results?.length > 0
-            ? movies.results.map((movie) => (
-                <Item key={movie.id} movie={movie} />
-              ))
-            : null}
-        </Slider>
+      <section className="my-4">
+        {movies && movies?.results?.length > 0
+          ? movies.results.map((movie) => <Item key={movie.id} movie={movie} />)
+          : null}
 
         {movies?.results?.length === 0 && query.length > 1 && (
           <div className="w-100 text-center">{noMoviesItems}</div>

@@ -7,7 +7,7 @@ import styles from "./Header.module.css";
 const Header = () => {
   return (
     <>
-      <header className="mb-4">
+      <header>
         <Navigation />
 
         <div className="d-flex align-items-center justify-content-between">
