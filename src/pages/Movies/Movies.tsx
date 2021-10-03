@@ -1,65 +1,22 @@
 import { useEffect, useState } from "react";
 
-import Swiper, { SwiperOptions, Navigation, Keyboard } from "swiper";
+import Swiper, { Navigation, Keyboard } from "swiper";
 import { Swiper as SwiperContainer, SwiperSlide } from "swiper/react";
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
 import { useDebounce } from "use-debounce";
 
-import Item from "components/Item";
+import Card from "components/Card";
 import SearchField from "components/SearchField";
 
 import { apiKey, apiMovieSearchUrl } from "utils/constants";
 
 import { noMoviesItems, cannotFetchMovies } from "./messages";
+import { swiperOptions } from "./Movies.constants";
+import { MoviesItems } from "./Movies.types";
 
 import "swiper/swiper.min.css";
 import "swiper/components/navigation/navigation.min.css";
-
-export interface Movie {
-  poster_path: string | null;
-  adult: boolean;
-  overview: string;
-  release_date: string;
-  genre_ids: number[];
-  id: number;
-  original_title: string;
-  original_language: string;
-  title: string;
-  backdrop_path: string | null;
-  popularity: number;
-  vote_count: number;
-  video: boolean;
-  vote_average: number;
-}
-
-export interface MoviesItems {
-  results: Movie[];
-}
-
-const swiperOptions: SwiperOptions = {
-  navigation: true,
-  keyboard: true,
-  slidesPerView: 1,
-  breakpoints: {
-    "768": {
-      slidesPerView: 2,
-      spaceBetween: 10,
-    },
-    "1024": {
-      slidesPerView: 3,
-      spaceBetween: 20,
-    },
-    "1200": {
-      slidesPerView: 3,
-      spaceBetween: 30,
-    },
-    "1400": {
-      slidesPerView: 4,
-      spaceBetween: 40,
-    },
-  },
-};
 
 Swiper.use([Navigation, Keyboard]);
 new Swiper(".custom-swiper", swiperOptions);
@@ -67,6 +24,7 @@ new Swiper(".custom-swiper", swiperOptions);
 const MoviesLists = () => {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [movies, setMovies] = useState<MoviesItems | null>(null);
 
   const [debouncedQuery] = useDebounce(query, 300);
@@ -80,6 +38,7 @@ const MoviesLists = () => {
       return;
     }
     setLoading(true);
+    setError(false);
 
     const fetchData = async () => {
       try {
@@ -92,9 +51,7 @@ const MoviesLists = () => {
         setLoading(false);
       } catch {
         setLoading(false);
-        if (debouncedQuery.length > 1) {
-          <Alert>{cannotFetchMovies}</Alert>;
-        }
+        setError(true);
       }
     };
 
@@ -116,16 +73,20 @@ const MoviesLists = () => {
           {movies && movies?.results?.length > 0
             ? movies.results.map((movie) => (
                 <SwiperSlide key={movie.id}>
-                  <Item movie={movie} />
+                  <Card movie={movie} />
                 </SwiperSlide>
               ))
             : null}
         </SwiperContainer>
 
         {movies?.results?.length === 0 && query.length > 1 && (
-          <div className="w-100 text-center">{noMoviesItems}</div>
+          <Alert variant="info" className="text-center">
+            {noMoviesItems}
+          </Alert>
         )}
       </section>
+
+      {error && <Alert variant="danger">{cannotFetchMovies}</Alert>}
     </>
   );
 };

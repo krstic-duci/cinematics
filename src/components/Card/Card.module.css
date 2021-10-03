@@ -1,11 +1,11 @@
-.itemContainer {
-  box-shadow: 0px 0px 8px 5px rgb(0 0 0 / 25%);
+.cardContainer {
+  box-shadow: 0px 0px 4px 2px rgb(0 0 0 / 25%);
   transition: all 0.3s linear;
   border-radius: 5px;
-  /* margin: 10px; */
+  margin: 5px;
 }
 
-.bgImageContainer {
+.cardImageContainer {
   height: 300px;
   background-position: top;
   background-repeat: no-repeat;
@@ -15,13 +15,13 @@
   border-top-left-radius: 5px;
 }
 
-.movieTitle {
+.cardInfo {
+  height: calc(100% - 300px);
+}
+
+.cardTitle {
   color: var(--primary-color);
   text-transform: capitalize;
   font-size: 18px;
   line-height: 20px;
 }
-/* 
-.movieInfo {
-  height: calc(100% - 300px);
-} */
