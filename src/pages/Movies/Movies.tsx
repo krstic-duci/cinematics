@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import Swiper, { SwiperOptions, Navigation, Keyboard } from "swiper";
+import { Swiper as SwiperContainer, SwiperSlide } from "swiper/react";
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
 import { useDebounce } from "use-debounce";
@@ -10,6 +12,9 @@ import SearchField from "components/SearchField";
 import { apiKey, apiMovieSearchUrl } from "utils/constants";
 
 import { noMoviesItems, cannotFetchMovies } from "./messages";
+
+import "swiper/swiper.min.css";
+import "swiper/components/navigation/navigation.min.css";
 
 export interface Movie {
   poster_path: string | null;
@@ -31,6 +36,33 @@ export interface Movie {
 export interface MoviesItems {
   results: Movie[];
 }
+
+const swiperOptions: SwiperOptions = {
+  navigation: true,
+  keyboard: true,
+  slidesPerView: 1,
+  breakpoints: {
+    "768": {
+      slidesPerView: 2,
+      spaceBetween: 10,
+    },
+    "1024": {
+      slidesPerView: 3,
+      spaceBetween: 20,
+    },
+    "1200": {
+      slidesPerView: 3,
+      spaceBetween: 30,
+    },
+    "1400": {
+      slidesPerView: 4,
+      spaceBetween: 40,
+    },
+  },
+};
+
+Swiper.use([Navigation, Keyboard]);
+new Swiper(".custom-swiper", swiperOptions);
 
 const MoviesLists = () => {
   const [query, setQuery] = useState("");
@@ -80,9 +112,15 @@ const MoviesLists = () => {
       )}
 
       <section className="my-4">
-        {movies && movies?.results?.length > 0
-          ? movies.results.map((movie) => <Item key={movie.id} movie={movie} />)
-          : null}
+        <SwiperContainer {...swiperOptions}>
+          {movies && movies?.results?.length > 0
+            ? movies.results.map((movie) => (
+                <SwiperSlide key={movie.id}>
+                  <Item movie={movie} />
+                </SwiperSlide>
+              ))
+            : null}
+        </SwiperContainer>
 
         {movies?.results?.length === 0 && query.length > 1 && (
           <div className="w-100 text-center">{noMoviesItems}</div>

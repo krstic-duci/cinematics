@@ -18,7 +18,7 @@ const Item: React.VFC<MovieProps> = ({ movie: { title, poster_path } }) => {
     : "url(https://via.placeholder.com/300)";
 
   return (
-    <div className={`${styles.itemContainer} mx-3 h-100`}>
+    <div className={`${styles.itemContainer}`}>
       <div
         className={styles.bgImageContainer}
         style={{
