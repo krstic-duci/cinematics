@@ -1,55 +1,109 @@
 import React from "react";
 
 import Button from "react-bootstrap/Button";
-import { ClockHistory, Star } from "react-bootstrap-icons";
+import { ClockHistory, Star, StarFill } from "react-bootstrap-icons";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { toast } from "react-toastify";
 
-import { imgUrl } from "utils/constants";
+import { imgUrl } from "api";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import {
+  addWatchLater,
+  selectWatchLaterMovies,
+} from "app/store/watchLater/watchLaterSlice";
 
 import type { Movie } from "pages/Movies/Movies.types";
 
+import { preventDuplicateToastMovieId } from "./Cards.constants";
+import { alreadyExistWatchLaterMovie, addedWatchLaterMovie } from "./messages";
+
 import styles from "./Card.module.css";
+
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 interface CardProps {
   movie: Movie;
+  onFavoritePickOrRemove: (id: number) => void;
 }
 
-const Card: React.VFC<CardProps> = ({ movie: { title, poster_path } }) => {
-  const bgImage = poster_path
-    ? `url(${imgUrl}/${poster_path})`
-    : "url(https://via.placeholder.com/300)";
+const Card: React.VFC<CardProps> = ({ movie, onFavoritePickOrRemove }) => {
+  const { title, poster_path, id, isFavorite } = movie;
+
+  const dispatch = useAppDispatch();
+  const watchLaterMovies = useAppSelector(selectWatchLaterMovies);
+
+  const handleFavorite = () => {
+    onFavoritePickOrRemove(id);
+  };
+
+  const handleWatchLaterMovie = () => {
+    const isWatchLaterMovie = watchLaterMovies.find((m) => m.id === movie.id);
+    if (isWatchLaterMovie) {
+      return toast.warning(alreadyExistWatchLaterMovie, {
+        toastId: preventDuplicateToastMovieId,
+      });
+    }
+
+    dispatch(addWatchLater(movie));
+    toast.success(addedWatchLaterMovie);
+  };
 
   return (
-    <div className={styles.cardContainer}>
-      <div
-        className={styles.cardImageContainer}
-        style={{
-          backgroundImage: bgImage,
-        }}
-      />
-
-      <div
-        className={`${styles.cardInfo} d-flex justify-content-center w-100 flex-wrap`}
-      >
-        <p
-          className={`${styles.cardTitle} p-1 align-self-center text-center w-100`}
-        >
-          {title}
-        </p>
-
-        <div className="mb-1 mt-auto">
-          <Button onClick={() => console.log("Added to favorite")}>
-            Add to favorite <Star />
-          </Button>
-
-          <Button
-            onClick={() => console.log("Added to Watch later")}
-            className="ms-3"
+    <>
+      <div className={`${styles.cardContainer} h-100 position-relative`}>
+        {isFavorite && (
+          <div
+            className={styles.cardImageContainerOverlay}
+            onClick={handleFavorite}
           >
-            Later <ClockHistory />
-          </Button>
+            <StarFill color="orange" />
+          </div>
+        )}
+
+        <LazyLoadImage
+          alt={title}
+          className={styles.cardImageContainer}
+          effect="blur"
+          height="300px"
+          src={
+            poster_path
+              ? `${imgUrl}/${poster_path}`
+              : "https://via.placeholder.com/300"
+          }
+          width="100%"
+        />
+
+        <div
+          className={`${styles.cardInfo} d-flex justify-content-center w-100 flex-wrap`}
+        >
+          <p
+            className={`${styles.cardTitle} p-1 align-self-center text-center w-100`}
+          >
+            {title}
+          </p>
+
+          <div className="mb-1 mt-auto d-flex flex-grow-1 justify-content-evenly">
+            {!isFavorite && (
+              <Button
+                onClick={handleFavorite}
+                className="d-flex align-items-center"
+                variant="outline-primary"
+              >
+                Add to favorite <Star className="ms-1" />
+              </Button>
+            )}
+
+            <Button
+              onClick={handleWatchLaterMovie}
+              className="d-flex align-items-center"
+              variant="outline-dark"
+            >
+              Later <ClockHistory className="ms-1" />
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

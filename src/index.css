@@ -8,3 +8,7 @@ a.active {
 }
 
 /* Swiper */
+.swiper-slide {
+  height: auto !important;
+  margin-bottom: 10px;
+}

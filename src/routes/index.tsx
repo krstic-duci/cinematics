@@ -1,8 +1,9 @@
+import { lazy } from "react";
 import { Switch, Route } from "react-router-dom";
 
-import WatchLater from "pages/WatchLater";
-import Movies from "pages/Movies";
-import FourOhFour from "pages/FourOhFour";
+const FourOhFour = lazy(() => import("pages/FourOhFour"));
+const WatchLater = lazy(() => import("pages/WatchLater"));
+const Movies = lazy(() => import("pages/Movies"));
 
 const Router = () => {
   return (

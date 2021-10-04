@@ -6,14 +6,13 @@ import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
 import { useDebounce } from "use-debounce";
 
+import { apiKey, apiMovieSearchUrl } from "api";
 import Card from "components/Card";
 import SearchField from "components/SearchField";
 
-import { apiKey, apiMovieSearchUrl } from "utils/constants";
-
 import { noMoviesItems, cannotFetchMovies } from "./messages";
 import { swiperOptions } from "./Movies.constants";
-import { MoviesItems } from "./Movies.types";
+import { Movie, MoviesItems } from "./Movies.types";
 
 import "swiper/swiper.min.css";
 import "swiper/components/navigation/navigation.min.css";
@@ -28,6 +27,26 @@ const MoviesLists = () => {
   const [movies, setMovies] = useState<MoviesItems | null>(null);
 
   const [debouncedQuery] = useDebounce(query, 300);
+
+  const onFavoritePickOrRemove = (id: number) => {
+    let favMovies: Movie[] = [];
+
+    // TODO: try to avoid too much nesting
+    if (movies) {
+      favMovies = movies?.results.map((movie) => {
+        if (movie.id === id) {
+          if (movie.isFavorite) {
+            movie.isFavorite = false;
+          } else {
+            movie.isFavorite = true;
+          }
+        }
+        return movie;
+      });
+    }
+
+    setMovies({ results: favMovies });
+  };
 
   useEffect(() => {
     // Early exit when search query is falsy.
@@ -73,7 +92,10 @@ const MoviesLists = () => {
           {movies && movies?.results?.length > 0
             ? movies.results.map((movie) => (
                 <SwiperSlide key={movie.id}>
-                  <Card movie={movie} />
+                  <Card
+                    movie={movie}
+                    onFavoritePickOrRemove={onFavoritePickOrRemove}
+                  />
                 </SwiperSlide>
               ))
             : null}

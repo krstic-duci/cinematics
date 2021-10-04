@@ -1,27 +1,42 @@
 .cardContainer {
-  box-shadow: 0px 0px 4px 2px rgb(0 0 0 / 25%);
-  transition: all 0.3s linear;
   border-radius: 5px;
-  margin: 5px;
+  box-shadow: 0px 0px 4px 2px rgb(0 0 0 / 25%);
+  margin: 4px;
 }
 
 .cardImageContainer {
-  height: 300px;
-  background-position: top;
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 100%;
-  border-top-right-radius: 5px;
   border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.cardImageContainerOverlay {
+  background-color: rgba(13, 37, 63, 0.6);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  cursor: pointer;
+  height: 300px;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+}
+
+.cardImageContainerOverlay > svg {
+  font-size: 25px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 
 .cardInfo {
   height: calc(100% - 300px);
+  border-top: 1px solid var(--primary-color);
 }
 
 .cardTitle {
   color: var(--primary-color);
-  text-transform: capitalize;
   font-size: 18px;
   line-height: 20px;
+  text-transform: capitalize;
 }

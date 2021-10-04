@@ -1,6 +1,6 @@
-import Navigation from "components/Navigation";
-
 import tmdb from "assets/images/tmdb.svg";
+
+import Navigation from "./Navigation";
 
 import styles from "./Header.module.css";
 
