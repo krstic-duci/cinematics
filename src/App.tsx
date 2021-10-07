@@ -1,18 +1,21 @@
+import { Suspense } from "react";
 import { ToastContainer } from "react-toastify";
 
-import Layout from "./layout";
+import PageSpinner from "components/PageSpinner";
 import Router from "routes";
 
-// TODO: Please add eslint-plugin-import, prettier, eslint
-const App = () => {
-  return (
-    <>
+import Layout from "./layout";
+
+const App = () => (
+  <>
+    <Suspense fallback={<PageSpinner />}>
       <Layout>
         <Router />
       </Layout>
-      <ToastContainer position="bottom-left" />
-    </>
-  );
-};
+    </Suspense>
+
+    <ToastContainer position="bottom-left" />
+  </>
+);
 
 export default App;

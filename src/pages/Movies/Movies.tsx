@@ -4,13 +4,17 @@ import Swiper, { Navigation, Keyboard } from "swiper";
 import { Swiper as SwiperContainer, SwiperSlide } from "swiper/react";
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
+import Form from "react-bootstrap/Form";
+import FormControl from "react-bootstrap/FormControl";
+import InputGroup from "react-bootstrap/InputGroup";
+import Button from "react-bootstrap/Button";
 import { useDebounce } from "use-debounce";
 
 import { apiKey, apiMovieSearchUrl } from "api";
 import Card from "components/Card";
-import SearchField from "components/SearchField";
+import Title from "components/Title";
+import Section from "components/Section";
 
-import { noMoviesItems, cannotFetchMovies } from "./messages";
 import { swiperOptions } from "./Movies.constants";
 import { Movie, MoviesItems } from "./Movies.types";
 
@@ -28,12 +32,20 @@ const MoviesLists = () => {
 
   const [debouncedQuery] = useDebounce(query, 300);
 
+  const handleMovieSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+  };
+
+  const handleClearMovieSearch = () => {
+    setQuery("");
+  };
+
   const onFavoritePickOrRemove = (id: number) => {
     let favMovies: Movie[] = [];
 
     // TODO: try to avoid too much nesting
     if (movies) {
-      favMovies = movies?.results.map((movie) => {
+      favMovies = movies.results.map((movie) => {
         if (movie.id === id) {
           if (movie.isFavorite) {
             movie.isFavorite = false;
@@ -79,19 +91,33 @@ const MoviesLists = () => {
 
   return (
     <>
-      <SearchField query={query} setQuery={setQuery} />
+      <Title label="Cinematics" />
+
+      <Form onSubmit={(event) => event.preventDefault()}>
+        <InputGroup>
+          <FormControl
+            type="text"
+            placeholder="Start typing..."
+            onChange={handleMovieSearch}
+            value={query}
+          />
+          <Button onClick={handleClearMovieSearch} variant="outline-dark">
+            Clear
+          </Button>
+        </InputGroup>
+      </Form>
 
       {loading && query.length > 1 && (
-        <div className="text-center w-100 mt-2">
+        <div className="text-center w-100 mt-2" data-testid="spinner">
           <Spinner animation="border" />
         </div>
       )}
 
-      <section className="my-4">
+      <Section>
         <SwiperContainer {...swiperOptions}>
           {movies && movies?.results?.length > 0
             ? movies.results.map((movie) => (
-                <SwiperSlide key={movie.id}>
+                <SwiperSlide key={movie.id} data-testid="movieCards">
                   <Card
                     movie={movie}
                     onFavoritePickOrRemove={onFavoritePickOrRemove}
@@ -102,13 +128,18 @@ const MoviesLists = () => {
         </SwiperContainer>
 
         {movies?.results?.length === 0 && query.length > 1 && (
-          <Alert variant="info" className="text-center">
-            {noMoviesItems}
+          <Alert variant="info" className="text-center" data-testid="noItems">
+            There are no movies for searched value, please try something else...
           </Alert>
         )}
-      </section>
+      </Section>
 
-      {error && <Alert variant="danger">{cannotFetchMovies}</Alert>}
+      {error && (
+        <Alert variant="danger">
+          There was some problem while fetching the movies, please try again
+          later...
+        </Alert>
+      )}
     </>
   );
 };

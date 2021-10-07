@@ -11,11 +11,9 @@ import {
   addWatchLater,
   selectWatchLaterMovies,
 } from "app/store/watchLater/watchLaterSlice";
-
 import type { Movie } from "pages/Movies/Movies.types";
 
 import { preventDuplicateToastMovieId } from "./Cards.constants";
-import { alreadyExistWatchLaterMovie, addedWatchLaterMovie } from "./messages";
 
 import styles from "./Card.module.css";
 
@@ -39,13 +37,13 @@ const Card: React.VFC<CardProps> = ({ movie, onFavoritePickOrRemove }) => {
   const handleWatchLaterMovie = () => {
     const isWatchLaterMovie = watchLaterMovies.find((m) => m.id === movie.id);
     if (isWatchLaterMovie) {
-      return toast.warning(alreadyExistWatchLaterMovie, {
+      return toast.warning("We already have that title for you...", {
         toastId: preventDuplicateToastMovieId,
       });
     }
 
     dispatch(addWatchLater(movie));
-    toast.success(addedWatchLaterMovie);
+    toast.success("Added to watch later");
   };
 
   return (
@@ -55,7 +53,9 @@ const Card: React.VFC<CardProps> = ({ movie, onFavoritePickOrRemove }) => {
           <div
             className={styles.cardImageContainerOverlay}
             onClick={handleFavorite}
+            data-testid="cardImageOverlay"
           >
+            <p className="text-light ms-2 w-75 mt-2">Click to remove</p>
             <StarFill color="orange" />
           </div>
         )}
@@ -83,15 +83,14 @@ const Card: React.VFC<CardProps> = ({ movie, onFavoritePickOrRemove }) => {
           </p>
 
           <div className="mb-1 mt-auto d-flex flex-grow-1 justify-content-evenly">
-            {!isFavorite && (
-              <Button
-                onClick={handleFavorite}
-                className="d-flex align-items-center"
-                variant="outline-primary"
-              >
-                Add to favorite <Star className="ms-1" />
-              </Button>
-            )}
+            <Button
+              onClick={handleFavorite}
+              className="d-flex align-items-center"
+              variant="primary"
+              disabled={isFavorite}
+            >
+              Add to favorite <Star className="ms-1" />
+            </Button>
 
             <Button
               onClick={handleWatchLaterMovie}

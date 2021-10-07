@@ -9,17 +9,15 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-const Layout: React.VFC<LayoutProps> = ({ children }) => {
-  return (
-    <main>
-      <Container>
-        <Row>
-          <Header />
-          {children}
-        </Row>
-      </Container>
-    </main>
-  );
-};
+const Layout: React.VFC<LayoutProps> = ({ children }) => (
+  <main>
+    <Container>
+      <Row>
+        <Header />
+        {children}
+      </Row>
+    </Container>
+  </main>
+);
 
 export default Layout;
