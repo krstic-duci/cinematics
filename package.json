@@ -25,7 +25,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "cross-env CI=true react-scripts test --env=jsdom",
+    "coverage": "npm test -- --coverage",
+    "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
@@ -62,7 +63,9 @@
             "external",
             "internal",
             "parent",
-            "sibling"
+            "sibling",
+            "type",
+            "index"
           ],
           "pathGroups": [
             {
@@ -71,8 +74,8 @@
               "position": "before"
             },
             {
-              "pattern": "*.css",
-              "group": "index",
+              "pattern": "./**/*.module.css",
+              "group": "unknown",
               "patternGroup": {
                 "matchBase": true
               },

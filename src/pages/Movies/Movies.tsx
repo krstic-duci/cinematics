@@ -10,13 +10,14 @@ import Swiper, { Navigation, Keyboard } from "swiper";
 import { Swiper as SwiperContainer, SwiperSlide } from "swiper/react";
 import { useDebounce } from "use-debounce";
 
-import { apiKey, apiMovieSearchUrl } from "api";
+import { apiKey, apiMovieUrl } from "api";
 import Card from "components/Card";
 import Section from "components/Section";
 import Title from "components/Title";
 
 import { swiperOptions } from "./Movies.constants";
-import { Movie, MoviesItems } from "./Movies.types";
+
+import type { Movie, MoviesItems, MoviesResponse } from "./Movies.types";
 
 import "swiper/swiper.min.css";
 import "swiper/components/navigation/navigation.min.css";
@@ -73,12 +74,12 @@ const MoviesLists = () => {
 
     const fetchData = async () => {
       try {
-        const response = await (
+        const response: MoviesResponse = await (
           await fetch(
-            `${apiMovieSearchUrl}?api_key=${apiKey}&include_adult=false&query=${debouncedQuery}`
+            `${apiMovieUrl}/search/movie/?api_key=${apiKey}&include_adult=false&query=${debouncedQuery}`
           )
         ).json();
-        setMovies(response);
+        setMovies({ results: response.results });
         setLoading(false);
       } catch {
         setLoading(false);

@@ -8,29 +8,13 @@ import { Provider } from "react-redux";
 import watchLaterReducer from "app/store/watchLater/watchLaterSlice";
 
 import Movies from "./Movies";
-import { MoviesItems } from "./Movies.types";
+
+import type { MoviesItems } from "./Movies.types";
 
 const inputTestValue = "testValue";
 
 const testMovies: MoviesItems = {
   results: [
-    {
-      adult: false,
-      backdrop_path: "/test1.jpg",
-      genre_ids: [1],
-      id: 1,
-      original_language: "en",
-      original_title: "title1",
-      overview: "overview1",
-      popularity: 1,
-      poster_path: "/test1.jpeg",
-      release_date: "2021-07-02",
-      title: "title1",
-      video: false,
-      vote_average: 1,
-      vote_count: 1,
-      isFavorite: false,
-    },
     {
       adult: false,
       backdrop_path: "/test2.jpg",
@@ -46,6 +30,23 @@ const testMovies: MoviesItems = {
       video: false,
       vote_average: 2,
       vote_count: 2,
+      isFavorite: false,
+    },
+    {
+      adult: false,
+      backdrop_path: "/test3.jpg",
+      genre_ids: [3],
+      id: 3,
+      original_language: "en",
+      original_title: "title3",
+      overview: "overview3",
+      popularity: 3,
+      poster_path: "/test3.jpeg",
+      release_date: "2021-07-02",
+      title: "title3",
+      video: false,
+      vote_average: 3,
+      vote_count: 3,
       isFavorite: false,
     },
   ],

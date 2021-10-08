@@ -1,12 +1,29 @@
 .cardWatchLater {
-  border-top: 3px solid var(--bs-gray-400);
   border-bottom: 1px solid var(--bs-gray-400);
   border-left: 1px solid var(--bs-gray-400);
-  border-right: 1px solid var(--bs-gray-400);
-  transition: border-top 0.3s linear;
   border-radius: 5px;
+  border-right: 1px solid var(--bs-gray-400);
+  border-top: 3px solid var(--bs-gray-400);
+  transition: all 0.3s linear;
 }
 
 .cardWatchLater:hover {
   border-top: 3px solid var(--primary-color);
+  box-shadow: 0 4px 2px -2px var(--bs-gray-400);
+}
+
+.cardWatchLaterTitle {
+  font-size: 20px;
+  color: var(--primary-color);
+  letter-spacing: 1px;
+}
+
+.cardWatchPopularity {
+  background-color: var(--bs-orange);
+  border-radius: 4px;
+}
+
+.cardWatchReleaseDate {
+  background-color: var(--primary-color);
+  border-radius: 4px;
 }

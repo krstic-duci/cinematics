@@ -19,3 +19,9 @@ export interface Movie {
 export interface MoviesItems {
   results: Movie[];
 }
+
+export interface MoviesResponse extends MoviesItems {
+  page: number;
+  total_pages: number;
+  total_results: number;
+}

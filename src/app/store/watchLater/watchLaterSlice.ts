@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { Movie, MoviesItems } from "pages/Movies/Movies.types";
+import { RootState } from "../index";
 
-import { RootState } from "../";
+import type { Movie, MoviesItems } from "pages/Movies/Movies.types";
 
 const initialState: MoviesItems = {
   results: [],
@@ -13,7 +13,11 @@ const watchLater = createSlice({
   initialState,
   reducers: {
     addWatchLater: (state, action: PayloadAction<Movie>) => {
-      state.results.push(action.payload);
+      // Since TMDB doesn't have isFavorite in response,
+      // we are adding a default one because if you first
+      // click on "Later" then "Add to Favorite" it would break
+      // because state object cannot be extended
+      state.results.push({ ...action.payload, isFavorite: false });
     },
     removeWatchLaterItem: (state, action: PayloadAction<number>) => {
       state.results = state.results.filter((movie) => movie.id !== action.payload);

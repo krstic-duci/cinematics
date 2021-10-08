@@ -4,10 +4,11 @@ import "@testing-library/jest-dom/extend-expect";
 import { Provider } from "react-redux";
 
 import watchLaterReducer from "app/store/watchLater/watchLaterSlice";
-import { Movie } from "pages/Movies/Movies.types";
 import { testMovie } from "utils/mockMovie";
 
 import Card from "./Card";
+
+import type { Movie } from "pages/Movies/Movies.types";
 
 describe("Card component", () => {
   describe("with initial testMovie", () => {

@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 
-import { ThreeDotsVertical } from "react-bootstrap-icons";
+import { StarFill, Trash } from "react-bootstrap-icons";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
 
 import { useAppSelector, useAppDispatch } from "app/hooks";
 import { removeWatchLaterItem, selectWatchLaterMovies } from "app/store/watchLater/watchLaterSlice";
+import InfoText from "components/InfoText";
 import Section from "components/Section";
 import Title from "components/Title";
 
@@ -19,14 +21,16 @@ const WatchLater = () => {
   const watchLaterMovies = useAppSelector(selectWatchLaterMovies);
 
   const handleRemoveMovie = (id: number | null) => {
-    if (id) {
-      dispatch(removeWatchLaterItem(id));
-      return toast.success("Removed from Watch later");
+    if (!id) {
+      return;
     }
+    toast.success("Removed from Watch later");
+    dispatch(removeWatchLaterItem(id));
     setShowDeleteModal(false);
   };
 
-  const handleOpenModal = (id: number) => {
+  const handleOpenModal = (id: number, event: MouseEvent) => {
+    event.stopPropagation();
     setShowDeleteModal(true);
     setShowSelectedMovieId(id);
   };
@@ -36,23 +40,47 @@ const WatchLater = () => {
       <Title label="Watch Later" />
 
       <Section data-testid="watchLaterSection">
-        {watchLaterMovies.map((movie, index) => (
-          <div
-            key={movie.id}
-            className={`${styles.cardWatchLater} d-flex p-3 align-items-center mb-3`}
-            data-testid="watchLaterItem"
-          >
-            <p className="mb-0">
-              {index + 1}. {movie.title}
-            </p>
-            <Button
-              variant="outline-dark"
-              onClick={() => handleOpenModal(movie.id)}
-              className="ms-auto"
-              data-testid="openModalWatchLater"
+        {watchLaterMovies.map(({ title, overview, popularity, id, release_date }) => (
+          <div key={id} className={`${styles.cardWatchLater} mb-3`} data-testid="watchLaterItem">
+            <InfoText
+              className={`${styles.cardWatchLaterTitle} mb-0 mt-2 text-center text-uppercase`}
             >
-              <ThreeDotsVertical />
-            </Button>
+              {title}
+            </InfoText>
+
+            <div className="d-flex align-items-center flex-wrap p-3">
+              <Col md={10} xs={12}>
+                <InfoText
+                  label="Popularity"
+                  className="d-flex align-items-center"
+                  labelClassName={`${styles.cardWatchPopularity} text-light p-1 me-1`}
+                >
+                  {popularity} <StarFill color="var(--bs-orange)" className="ms-1" />
+                </InfoText>
+                <InfoText
+                  label="Release date"
+                  labelClassName={`${styles.cardWatchReleaseDate} text-light p-1 me-1`}
+                >
+                  {release_date}
+                </InfoText>
+                <p>{overview}</p>
+              </Col>
+
+              <Col md={2} xs={12} className="mt-3 mt-md-0">
+                <Button
+                  variant="outline-danger"
+                  onClick={(event) => handleOpenModal(id, event)}
+                  className="mx-auto ms-md-auto me-md-0 d-flex align-items-center"
+                  data-testid="openModalWatchLater"
+                >
+                  <Trash className="me-1" />
+                  Remove
+                </Button>
+              </Col>
+            </div>
+
+            {/* TODO: add youtube player */}
+            <div className="text-center text-black-50">TRAILER</div>
           </div>
         ))}
       </Section>

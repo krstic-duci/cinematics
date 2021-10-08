@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ClockHistory, Star, StarFill } from "react-bootstrap-icons";
+import { ClockHistory, Heart, HeartFill } from "react-bootstrap-icons";
 import Button from "react-bootstrap/Button";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { toast } from "react-toastify";
@@ -8,10 +8,12 @@ import { toast } from "react-toastify";
 import { imgUrl } from "api";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { addWatchLater, selectWatchLaterMovies } from "app/store/watchLater/watchLaterSlice";
+
+import { preventDuplicateToastMovieId } from "./Cards.constants";
+
 import type { Movie } from "pages/Movies/Movies.types";
 
 import styles from "./Card.module.css";
-import { preventDuplicateToastMovieId } from "./Cards.constants";
 
 import "react-lazy-load-image-component/src/effects/blur.css";
 
@@ -50,8 +52,8 @@ const Card: React.VFC<CardProps> = ({ movie, onFavoritePickOrRemove }) => {
             onClick={handleFavorite}
             data-testid="cardImageOverlay"
           >
-            <p className="text-light ms-2 w-75 mt-2">Click to remove</p>
-            <StarFill color="orange" />
+            <p className="text-light ms-2 w-75 mt-2">Click to remove favorite</p>
+            <HeartFill color="var(--bs-red)" />
           </div>
         )}
 
@@ -74,7 +76,7 @@ const Card: React.VFC<CardProps> = ({ movie, onFavoritePickOrRemove }) => {
               variant="primary"
               disabled={isFavorite}
             >
-              Add to favorite <Star className="ms-1" />
+              Add to favorite <Heart className="ms-1" />
             </Button>
 
             <Button

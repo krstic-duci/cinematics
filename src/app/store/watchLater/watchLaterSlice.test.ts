@@ -1,7 +1,8 @@
-import type { MoviesItems } from "pages/Movies/Movies.types";
 import { testMovie } from "utils/mockMovie";
 
 import reducer, { addWatchLater, removeWatchLaterItem } from "./watchLaterSlice";
+
+import type { MoviesItems } from "pages/Movies/Movies.types";
 
 describe("WatchLater reducer", () => {
   it("should add one movie item", () => {
