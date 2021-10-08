@@ -8,7 +8,7 @@
 - Better color pallet and overall UX/UI
 - Better accessibility
 - ErrorBoundary Component
-- eslint-import-plugin for sorting the imports and their order
 - prettier, eslint and test pre-push husky hook
+- e2e tests
 - make HOC for <Provider /> for *test.tsx files
 - add codecov for test coverage on Github

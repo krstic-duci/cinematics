@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 
-import Swiper, { Navigation, Keyboard } from "swiper";
-import { Swiper as SwiperContainer, SwiperSlide } from "swiper/react";
-import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
+import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import InputGroup from "react-bootstrap/InputGroup";
-import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
+import Swiper, { Navigation, Keyboard } from "swiper";
+import { Swiper as SwiperContainer, SwiperSlide } from "swiper/react";
 import { useDebounce } from "use-debounce";
 
 import { apiKey, apiMovieSearchUrl } from "api";
 import Card from "components/Card";
-import Title from "components/Title";
 import Section from "components/Section";
+import Title from "components/Title";
 
 import { swiperOptions } from "./Movies.constants";
 import { Movie, MoviesItems } from "./Movies.types";
@@ -118,10 +118,7 @@ const MoviesLists = () => {
           {movies && movies?.results?.length > 0
             ? movies.results.map((movie) => (
                 <SwiperSlide key={movie.id} data-testid="movieCards">
-                  <Card
-                    movie={movie}
-                    onFavoritePickOrRemove={onFavoritePickOrRemove}
-                  />
+                  <Card movie={movie} onFavoritePickOrRemove={onFavoritePickOrRemove} />
                 </SwiperSlide>
               ))
             : null}
@@ -136,8 +133,7 @@ const MoviesLists = () => {
 
       {error && (
         <Alert variant="danger">
-          There was some problem while fetching the movies, please try again
-          later...
+          There was some problem while fetching the movies, please try again later...
         </Alert>
       )}
     </>

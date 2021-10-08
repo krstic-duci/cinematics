@@ -1,6 +1,6 @@
+import { House, ClockHistory } from "react-bootstrap-icons";
 import Nav from "react-bootstrap/Nav";
 import { NavLink } from "react-router-dom";
-import { House, ClockHistory } from "react-bootstrap-icons";
 
 import tmdb from "assets/images/tmdb.svg";
 

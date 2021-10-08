@@ -7,8 +7,6 @@ describe("Title component", () => {
     const testLabel = "testLabel";
     render(<Title label={testLabel} />);
 
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      testLabel
-    );
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(testLabel);
   });
 });

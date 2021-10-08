@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+
 import { ToastContainer } from "react-toastify";
 
 import PageSpinner from "components/PageSpinner";

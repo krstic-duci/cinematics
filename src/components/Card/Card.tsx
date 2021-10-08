@@ -1,21 +1,17 @@
 import React from "react";
 
-import Button from "react-bootstrap/Button";
 import { ClockHistory, Star, StarFill } from "react-bootstrap-icons";
+import Button from "react-bootstrap/Button";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { toast } from "react-toastify";
 
 import { imgUrl } from "api";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import {
-  addWatchLater,
-  selectWatchLaterMovies,
-} from "app/store/watchLater/watchLaterSlice";
+import { addWatchLater, selectWatchLaterMovies } from "app/store/watchLater/watchLaterSlice";
 import type { Movie } from "pages/Movies/Movies.types";
 
-import { preventDuplicateToastMovieId } from "./Cards.constants";
-
 import styles from "./Card.module.css";
+import { preventDuplicateToastMovieId } from "./Cards.constants";
 
 import "react-lazy-load-image-component/src/effects/blur.css";
 
@@ -26,7 +22,6 @@ interface CardProps {
 
 const Card: React.VFC<CardProps> = ({ movie, onFavoritePickOrRemove }) => {
   const { title, poster_path, id, isFavorite } = movie;
-
   const dispatch = useAppDispatch();
   const watchLaterMovies = useAppSelector(selectWatchLaterMovies);
 
@@ -65,22 +60,12 @@ const Card: React.VFC<CardProps> = ({ movie, onFavoritePickOrRemove }) => {
           className={styles.cardImageContainer}
           effect="blur"
           height="300px"
-          src={
-            poster_path
-              ? `${imgUrl}/${poster_path}`
-              : "https://via.placeholder.com/300"
-          }
+          src={poster_path ? `${imgUrl}/${poster_path}` : "https://via.placeholder.com/300"}
           width="100%"
         />
 
-        <div
-          className={`${styles.cardInfo} d-flex justify-content-center w-100 flex-wrap`}
-        >
-          <p
-            className={`${styles.cardTitle} p-1 align-self-center text-center w-100`}
-          >
-            {title}
-          </p>
+        <div className={`${styles.cardInfo} d-flex justify-content-center w-100 flex-wrap`}>
+          <p className={`${styles.cardTitle} p-1 align-self-center text-center w-100`}>{title}</p>
 
           <div className="mb-1 mt-auto d-flex flex-grow-1 justify-content-evenly">
             <Button

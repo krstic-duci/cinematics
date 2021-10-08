@@ -1,25 +1,20 @@
 import { useState } from "react";
 
+import { ThreeDotsVertical } from "react-bootstrap-icons";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-import { ThreeDotsVertical } from "react-bootstrap-icons";
 
 import { useAppSelector, useAppDispatch } from "app/hooks";
-import {
-  removeWatchLaterItem,
-  selectWatchLaterMovies,
-} from "app/store/watchLater/watchLaterSlice";
-import Title from "components/Title";
+import { removeWatchLaterItem, selectWatchLaterMovies } from "app/store/watchLater/watchLaterSlice";
 import Section from "components/Section";
+import Title from "components/Title";
 
 import styles from "./WatchLater.module.css";
 
 const WatchLater = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [selectedMovieId, setShowSelectedMovieId] = useState<number | null>(
-    null
-  );
+  const [selectedMovieId, setShowSelectedMovieId] = useState<number | null>(null);
   const dispatch = useAppDispatch();
   const watchLaterMovies = useAppSelector(selectWatchLaterMovies);
 

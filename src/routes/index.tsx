@@ -1,4 +1,5 @@
 import { lazy } from "react";
+
 import { Switch, Route } from "react-router-dom";
 
 const FourOhFour = lazy(() => import("pages/FourOhFour"));

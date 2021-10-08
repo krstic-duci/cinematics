@@ -1,9 +1,7 @@
 import type { MoviesItems } from "pages/Movies/Movies.types";
 import { testMovie } from "utils/mockMovie";
-import reducer, {
-  addWatchLater,
-  removeWatchLaterItem,
-} from "./watchLaterSlice";
+
+import reducer, { addWatchLater, removeWatchLaterItem } from "./watchLaterSlice";
 
 describe("WatchLater reducer", () => {
   it("should add one movie item", () => {
@@ -23,8 +21,8 @@ describe("WatchLater reducer", () => {
         },
       ],
     };
-    expect(
-      reducer(previousState, removeWatchLaterItem(previousState.results[0].id))
-    ).toEqual({ results: [] });
+    expect(reducer(previousState, removeWatchLaterItem(previousState.results[0].id))).toEqual({
+      results: [],
+    });
   });
 });
