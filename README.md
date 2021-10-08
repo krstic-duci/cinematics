@@ -8,7 +8,7 @@
 - Better color pallet and overall UX/UI
 - Better accessibility
 - ErrorBoundary Component
-- prettier, eslint and test pre-push husky hook
+- prettier, eslint and test pre-commit husky hook
 - e2e tests
 - make HOC for <Provider /> for *test.tsx files
 - add codecov for test coverage on Github
