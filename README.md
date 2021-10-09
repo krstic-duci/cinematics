@@ -8,7 +8,8 @@
 - Better color pallet and overall UX/UI
 - Better accessibility
 - ErrorBoundary Component
-- e2e tests
-- setting api key for every request
+- in order not to lose state when switching between routes consider redux-toolkit for movies
+- setting api key for every request or use axios (also would fix the custom fetch() call in Movies.tsx)
 - make HOC for <Provider /> for *test.tsx files
-- add codecov for test coverage on Github
+- add movie trailers
+- e2e tests if needed

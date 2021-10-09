@@ -8,6 +8,7 @@
 }
 
 .cardWatchLater:hover {
+  transform: translateY(-5px);
   border-top: 3px solid var(--primary-color);
   box-shadow: 0 4px 2px -2px var(--bs-gray-400);
 }

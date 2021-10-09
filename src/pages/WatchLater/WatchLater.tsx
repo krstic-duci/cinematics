@@ -40,7 +40,7 @@ const WatchLater = () => {
       <Title label="Watch Later" />
 
       <Section data-testid="watchLaterSection">
-        {watchLaterMovies.map(({ title, overview, popularity, id, release_date }) => (
+        {watchLaterMovies.map(({ title, popularity, id, release_date }) => (
           <div key={id} className={`${styles.cardWatchLater} mb-3`} data-testid="watchLaterItem">
             <InfoText
               className={`${styles.cardWatchLaterTitle} mb-0 mt-2 text-center text-uppercase`}
@@ -63,7 +63,6 @@ const WatchLater = () => {
                 >
                   {release_date}
                 </InfoText>
-                <p>{overview}</p>
               </Col>
 
               <Col md={2} xs={12} className="mt-3 mt-md-0">
@@ -78,9 +77,6 @@ const WatchLater = () => {
                 </Button>
               </Col>
             </div>
-
-            {/* TODO: add youtube player */}
-            <div className="text-center text-black-50">TRAILER</div>
           </div>
         ))}
       </Section>

@@ -6,51 +6,11 @@ import "@testing-library/jest-dom/extend-expect";
 import { Provider } from "react-redux";
 
 import watchLaterReducer from "app/store/watchLater/watchLaterSlice";
+import { testMovies } from "utils/mockMovie";
 
 import Movies from "./Movies";
 
-import type { MoviesItems } from "./Movies.types";
-
 const inputTestValue = "testValue";
-
-const testMovies: MoviesItems = {
-  results: [
-    {
-      adult: false,
-      backdrop_path: "/test2.jpg",
-      genre_ids: [2],
-      id: 2,
-      original_language: "en",
-      original_title: "title2",
-      overview: "overview2",
-      popularity: 2,
-      poster_path: "/test2.jpeg",
-      release_date: "2021-07-02",
-      title: "title2",
-      video: false,
-      vote_average: 2,
-      vote_count: 2,
-      isFavorite: false,
-    },
-    {
-      adult: false,
-      backdrop_path: "/test3.jpg",
-      genre_ids: [3],
-      id: 3,
-      original_language: "en",
-      original_title: "title3",
-      overview: "overview3",
-      popularity: 3,
-      poster_path: "/test3.jpeg",
-      release_date: "2021-07-02",
-      title: "title3",
-      video: false,
-      vote_average: 3,
-      vote_count: 3,
-      isFavorite: false,
-    },
-  ],
-};
 
 beforeEach(() => {
   fetchMock.resetMocks();

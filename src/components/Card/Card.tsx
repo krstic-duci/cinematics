@@ -9,7 +9,7 @@ import { imgUrl } from "api";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { addWatchLater, selectWatchLaterMovies } from "app/store/watchLater/watchLaterSlice";
 
-import { preventDuplicateToastMovieId } from "./Cards.constants";
+import { preventDuplicateToastMovieId } from "./Card.constants";
 
 import type { Movie } from "pages/Movies/Movies.types";
 
