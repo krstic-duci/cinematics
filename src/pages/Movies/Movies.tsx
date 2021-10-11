@@ -76,7 +76,7 @@ const MoviesLists = () => {
       try {
         const response: MoviesResponse = await (
           await fetch(
-            `${apiMovieUrl}/search/movie/?api_key=${apiKey}&include_adult=false&query=${debouncedQuery}`
+            `${apiMovieUrl}/search/movie?api_key=${apiKey}&include_adult=false&query=${debouncedQuery}`
           )
         ).json();
         setMovies({ results: response.results });
