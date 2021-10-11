@@ -19,6 +19,7 @@ npm start
 - Better accessibility
 - ErrorBoundary Component
 - In order not to lose state when switching between routes consider redux for movies
+- In order to have clearer view about favorite movie, maybe needs adding favorite secion or another route for it
 - Setting api key for every request or use axios (also would fix the custom fetch() call in Movies.tsx)
 - Make HOC for `<Provider />` for `*.test.tsx` files
 - Add movie trailers
